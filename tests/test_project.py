@@ -19,18 +19,19 @@ from src import refund_agent
 
 def test_customer_files_exist():
     assert (ROOT / "data/raw/customers.csv").exists()
-    assert (ROOT / "data/clean/customers_clean.csv").exists()
+    assert (ROOT / "data/clean/customers.csv").exists()
 
 
 def test_clean_customer_ids_unique():
-    df = pd.read_csv(ROOT / "data/clean/customers_clean.csv")
+    df = pd.read_csv(ROOT / "data/clean/customers.csv")
+    assert "customer_id" in df.columns
     assert df["customer_id"].is_unique
 
 
 def test_churn_is_binary():
-    df = pd.read_csv(ROOT / "data/clean/customers_clean.csv")
-    assert set(df["churn"].dropna().unique()).issubset({0, 1})
-
+    df = pd.read_csv(ROOT / "outputs/churn_predictions.csv")
+    assert "churned" in df.columns
+    assert set(df["churned"].dropna().unique()).issubset({0, 1})
 
 # -------------------------
 # PART C TESTS
