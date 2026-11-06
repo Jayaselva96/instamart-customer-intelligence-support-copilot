@@ -5,7 +5,7 @@
 
 ---
 
-## Project Overview
+## Overview
 
 The **Instamart Customer Intelligence & Support Copilot** is a four-part analytics and AI/ML project. It transforms raw customer, product, order and support-ticket data into cleaned datasets, customer segments, churn/lapse predictions, support-ticket classifications and a policy-grounded refund-support agent.
 
@@ -23,20 +23,20 @@ The project is organized as a reproducible local prototype. It uses supplied/syn
 
 ## Table of Contents
 
-1. Business Problem and Objectives
-2. Dataset Overview
-3. Technology Stack
-4. Repository Structure
-5. Part A — Data Audit, Cleaning and SQL Analytics
-6. Part B — Customer Segmentation and Lapse Prediction
-7. Part C — Support Ticket Intelligence
-8. Part D — Policy RAG and Refund Support Agent
-9. Installation and Environment Setup
-10. How to Run the Project
-11. Final Verification and Automated Tests
-12. Generated Outputs
-13. Limitations and Responsible Use
-
+1. Overview
+2. Business Problem and Objectives
+3. Dataset Overview
+4. Technology Stack
+5. Repository Structure
+6. Part A - Data Audit, Cleaning and SQL Analytics
+7. Part B - Customer Segmentation and Lapse Prediction
+8. Part C - Support Ticket Intelligence
+9. Part D - Policy RAG and Refund Support Agent
+10. Reproduce
+11. Run the Project
+12. Final Verification and Automated Tests
+13. Generated Outputs
+14. Limitations and Next Steps
 ---
 
 ## 1. Business Problem and Objectives
@@ -190,7 +190,7 @@ Instamart capstone project/
 
 ---
 
-## 5. Part A — Data Audit, Cleaning and SQL Analytics
+## Part A — Data Audit, Cleaning and SQL Analytics
 
 ### 5.1 Raw Data Audit
 
@@ -301,7 +301,7 @@ The SQL runner includes reference-checkpoint assertions for the expected query r
 
 ---
 
-## 6. Part B — Customer Segmentation and Lapse Prediction
+## Part B — Customer Segmentation and Lapse Prediction
 
 Part B contains two connected machine-learning tasks: unsupervised customer segmentation and supervised customer lapse prediction.
 
@@ -396,7 +396,7 @@ The RFM/lapse workflow and the separate churn-prediction artifact are distinct o
 
 ---
 
-## 7. Part C — Support Ticket Intelligence
+## Part C — Support Ticket Intelligence
 
 Part C builds a support-ticket triage pipeline using the supplied 164-ticket dataset and the local deterministic mock LLM.
 
@@ -478,7 +478,7 @@ The budget demonstration is separate from the production triage output. Its resu
 
 ---
 
-## 8. Part D — Policy RAG and Refund Support Agent
+## Part D — Policy RAG and Refund Support Agent
 
 Part D contains a policy-grounded question-answering component and a simulated tool-using refund agent.
 
@@ -598,7 +598,7 @@ When a limit is reached, the agent returns a fallback outcome rather than contin
 
 ---
 
-## 9. Installation and Environment Setup
+## Reproduce
 
 ### Prerequisites
 
@@ -657,7 +657,7 @@ Use the same dependency environment when loading the saved `outputs/lapse_model.
 
 ---
 
-## 10. How to Run the Project
+### Run the Project
 
 The project provides a main execution script named `run_project.py`.
 
@@ -738,7 +738,7 @@ The project also creates SQLite tables in `data/instamart.db` and JSON checkpoin
 
 ---
 
-## 13. Limitations and Responsible Use
+## Limitations and Next Steps
 
 - **Synthetic/supplied data:** Results are based on the project datasets and do not establish performance on live Instamart customer data.
 - **RFM interpretation:** K-Means cluster labels are descriptive interpretations of cluster profiles. They are not independently verified business segments.
