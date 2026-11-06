@@ -1,0 +1,10 @@
+{
+  "raw_orders_count": 13084,
+  "exact_duplicates": 119,
+  "pending_orders": 656,
+  "distinct_order_ids": 12309,
+  "invalid_age_count": 6,
+  "missing_age_count": 61,
+  "clean_orders_count": 12309,
+  "completed_revenue": 2998668.8
+}

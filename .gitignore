@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Environment variables
+.env
+.env.*
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Pytest
+.pytest_cache/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Generated agent state
+state/*.json
+
+# Operating system
+.DS_Store
+Thumbs.db
+# Legacy files and duplicate datasets
+/data clean/
+/prediction churn/
+/part_a_clean.py
+/load_sqlite.py
+/agent_scenarios.csv
+/support_policies.json
+/data/clean/*_clean.csv

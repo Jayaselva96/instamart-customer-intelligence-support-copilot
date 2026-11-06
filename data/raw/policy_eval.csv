@@ -1,0 +1,15 @@
+question,expected_doc,expected_fact
+What delivery time makes a completed order eligible for a full refund?,refund_policy,more than 45 minutes
+Who must approve a refund above INR 1000?,refund_policy,human support lead
+How many days do I have to raise a refund request?,refund_policy,within 7 days
+What is the delivery fee on small orders?,delivery_policy,INR 25
+On orders of what value is delivery free?,delivery_policy,INR 199 or more
+Why does the electronics delivery need a one time password?,delivery_policy,one time password
+Is cash on delivery available for a large order?,payment_policy,INR 2500
+How soon is money returned when a payment fails but is deducted?,payment_policy,48 hours
+Can wallet balance be refunded as cash?,payment_policy,never refunded as cash
+When are delivery addresses deleted from active systems?,privacy_policy,180 days
+How fast must a fraud ticket reach the security team?,escalation_policy,within 2 hours
+After how many steps must an automated assistant hand over to a human?,escalation_policy,6 steps
+What is the favourite colour of the company mascot?,NONE,
+Who won the cricket world cup final?,NONE,
