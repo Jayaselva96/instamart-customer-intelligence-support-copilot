@@ -254,11 +254,6 @@ order_amount = price_inr * quantity * (1 - discount_pct / 100)
 - Imputes missing delivery times for completed orders using the median for the relevant product category.
 - Leaves cancelled-order delivery times missing.
 
-**Support-ticket cleaning**
-
-- Creates a `clean_text` field.
-- Redacts email addresses, phone numbers and order-ID patterns from ticket text.
-
 ### 5.4 Cleaned Data Results
 
 | Dataset | Cleaned Rows |
@@ -369,7 +364,7 @@ The lapse-model script uses a cohort of 1,156 customers, with 924 training rows 
 
 ### 6.5 Churn Prediction Model Evaluation
 
-The churn prediction model was evaluated using a train-test split.
+The separate churn-prediction artifact reports the following evaluation metrics in outputs/churn_metrics.json. These metrics are not the evaluation results of the lapse model described in Section 6.4.
 
 | Evaluation Metric | Score |
 |---|---:|
@@ -383,7 +378,7 @@ The churn prediction model was evaluated using a train-test split.
 - Training samples: 924
 - Testing samples: 232
 
-The evaluation indicates that the model identifies customer churn patterns with a test accuracy of 73.71%. Precision, recall and F1-score provide additional insight into its ability to identify customers at risk of churn.
+The recorded churn-artifact metrics show an accuracy of 73.71%. Precision, recall and F1-score provide additional evaluation measures. The artifact is documented separately from the lapse-prediction workflow.
 
 These results are based on the supplied project dataset and should not be interpreted as production performance.
 
@@ -407,7 +402,7 @@ Part C builds a support-ticket triage pipeline using the supplied 164-ticket dat
 
 ### 7.1 Input Guardrails and Privacy
 
-Before classification, the pipeline applies input checks and PII redaction.
+Before classification, the pipeline applies input checks and PII redaction. The redacted ticket text is passed to the mock LLM instead of the original text.
 
 - Empty or whitespace-only ticket text is skipped.
 - Extremely long ticket input is flagged rather than passed through normal classification.
