@@ -123,9 +123,9 @@ pytest>=7.0.0
 The project pins scikit-learn to **1.8.0**. Keep the saved model and the environment used to load it on the same scikit-learn version. If the model is retrained under a different version, update and test the dependency specification accordingly.
 
 ---
-
 ## 4. Repository Structure
 
+```text
 Instamart capstone project/
 │
 ├── data/
@@ -184,6 +184,9 @@ Instamart capstone project/
 ├── requirements.txt
 ├── README.md
 └── .gitignore
+```
+
+## 5. Part A — Data Audit, Cleaning and SQL Analytics
 ---
 
 ## 5. Part A — Data Audit, Cleaning and SQL Analytics
