@@ -9,33 +9,33 @@
 
 The **Instamart Customer Intelligence & Support Copilot** is a four-part analytics and AI/ML project. It transforms raw customer, product, order and support-ticket data into cleaned datasets, customer segments, churn/lapse predictions, support-ticket classifications and a policy-grounded refund-support agent.
 
-The project is organized as a reproducible local prototype. It uses supplied/synthetic Instamart-style datasets and a deterministic mock LLM; it does **not** connect to live Instamart systems, make real refunds, or use a production language-model API.
+The project is organized as a reproducible local prototype. It uses supplied/synthetic Instamart-style datasets and a deterministic mock LLM. It does **not** connect to live Instamart systems, make real refunds or use a production language-model API.
 
-### Project at a glance
+### Project at a Glance
 
 | Area | Implementation |
 |---|---|
 | Part A | Raw data audit, data cleaning, EDA, SQLite database and SQL analytics |
 | Part B | RFM analysis, K-Means customer segmentation, PCA and lapse prediction |
 | Part C | Support-ticket triage, PII redaction, classification, priority routing and token-budget demonstration |
-| Part D | Policy document chunking, TF-IDF retrieval, mock-LLM policy Q&A and a simulated ReAct refund agent |
+| Part D | Policy document chunking, TF-IDF retrieval, mock-LLM policy Q&A and simulated ReAct refund agent |
 | Validation | Four part-specific validators, automated pytest checks and Python compilation |
 
 ## Table of Contents
 
-1. [Business Problem and Objectives](#1-business-problem-and-objectives)
-2. [Dataset Overview](#2-dataset-overview)
-3. [Technology Stack](#3-technology-stack)
-4. [Repository Structure](#4-repository-structure)
-5. [Part A — Data Audit, Cleaning and SQL Analytics](#5-part-a--data-audit-cleaning-and-sql-analytics)
-6. [Part B — Customer Segmentation and Lapse Prediction](#6-part-b--customer-segmentation-and-lapse-prediction)
-7. [Part C — Support Ticket Intelligence](#7-part-c--support-ticket-intelligence)
-8. [Part D — Policy RAG and Refund Support Agent](#8-part-d--policy-rag-and-refund-support-agent)
-9. [Installation and Environment Setup](#9-installation-and-environment-setup)
-10. [How to Run the Project](#10-how-to-run-the-project)
-11. [Final Verification and Automated Tests](#11-final-verification-and-automated-tests)
-12. [Generated Outputs](#12-generated-outputs)
-13. [Limitations and Responsible Use](#13-limitations-and-responsible-use)
+1. Business Problem and Objectives
+2. Dataset Overview
+3. Technology Stack
+4. Repository Structure
+5. Part A — Data Audit, Cleaning and SQL Analytics
+6. Part B — Customer Segmentation and Lapse Prediction
+7. Part C — Support Ticket Intelligence
+8. Part D — Policy RAG and Refund Support Agent
+9. Installation and Environment Setup
+10. How to Run the Project
+11. Final Verification and Automated Tests
+12. Generated Outputs
+13. Limitations and Responsible Use
 
 ---
 
@@ -45,7 +45,7 @@ An online grocery and quick-commerce business needs to understand customer purch
 
 This project demonstrates a local prototype for those needs.
 
-### Main objectives
+### Main Objectives
 
 - Inspect raw data and identify missing, duplicated and invalid values.
 - Clean customer, product, order and ticket datasets.
@@ -65,7 +65,7 @@ This project demonstrates a local prototype for those needs.
 
 The project data is organized under `data/raw/`, `data/clean/` and `data/policies/`.
 
-### Raw datasets
+### Raw Datasets
 
 | File | Rows | Purpose |
 |---|---:|---|
@@ -76,7 +76,7 @@ The project data is organized under `data/raw/`, `data/clean/` and `data/policie
 | `policy_eval.csv` | 14 | Questions and expected policy document/fact for retrieval evaluation |
 | `agent_scenarios.csv` | 7 | Refund-agent test scenarios and expected outcomes |
 
-### Policy documents
+### Policy Documents
 
 The support assistant reads five text policy files from `data/policies/`:
 
@@ -88,7 +88,7 @@ The support assistant reads five text policy files from `data/policies/`:
 
 A JSON policy file, `support_policies.json`, is also included in the policy directory.
 
-### Data note
+### Data Note
 
 The project dataset is a supplied/synthetic demonstration dataset. The reported metrics describe this dataset and its evaluation setup; they should not be interpreted as validated business performance on real Instamart customer data.
 
@@ -96,7 +96,7 @@ The project dataset is a supplied/synthetic demonstration dataset. The reported 
 
 ## 3. Technology Stack
 
-| Technology | Role in this project |
+| Technology | Role in This Project |
 |---|---|
 | Python | Main programming language |
 | Pandas | Data loading, cleaning, transformation and analysis |
@@ -108,7 +108,7 @@ The project dataset is a supplied/synthetic demonstration dataset. The reported 
 | pytest | Automated project tests |
 | JSON / JSONL / CSV | Configuration, checkpoints, ledgers and generated outputs |
 
-### Python dependencies
+### Python Dependencies
 
 The current `requirements.txt` specifies:
 
@@ -123,6 +123,7 @@ pytest>=7.0.0
 The project pins scikit-learn to **1.8.0**. Keep the saved model and the environment used to load it on the same scikit-learn version. If the model is retrained under a different version, update and test the dependency specification accordingly.
 
 ---
+
 ## 4. Repository Structure
 
 ```text
@@ -175,6 +176,7 @@ Instamart capstone project/
 │   └── validate_part_d.py
 │
 ├── state/
+│
 ├── tests/
 │   └── test_project.py
 │
@@ -186,7 +188,6 @@ Instamart capstone project/
 └── .gitignore
 ```
 
-## 5. Part A — Data Audit, Cleaning and SQL Analytics
 ---
 
 ## 5. Part A — Data Audit, Cleaning and SQL Analytics
@@ -206,11 +207,11 @@ The audit includes:
 - Missing and out-of-range customer ages.
 - Variations in city and gender values.
 
-### 5.2 Raw order audit checkpoints
+### 5.2 Raw Order Audit Checkpoints
 
 The supplied raw order data contains the following observed values:
 
-| Audit metric | Observed value |
+| Audit Metric | Observed Value |
 |---|---:|
 | Raw order rows | 13,084 |
 | Exact duplicate rows | 119 |
@@ -245,7 +246,9 @@ The supplied raw order data contains the following observed values:
 - Converts order amounts to numeric values.
 - Recalculates missing order amounts using product price, quantity and discount:
 
-  `order_amount = price_inr × quantity × (1 − discount_pct / 100)`
+```python
+order_amount = price_inr * quantity * (1 - discount_pct / 100)
+```
 
 - Converts negative delivery times to missing values.
 - Imputes missing delivery times for completed orders using the median for the relevant product category.
@@ -258,7 +261,7 @@ The supplied raw order data contains the following observed values:
 
 ### 5.4 Cleaned Data Results
 
-| Dataset | Cleaned rows |
+| Dataset | Cleaned Rows |
 |---|---:|
 | Customers | 1,200 |
 | Products | 40 |
@@ -275,8 +278,6 @@ The results are written to `data/clean/` and summarized in `outputs/data_quality
 
 ### 5.5 SQLite Database
 
-### 5.5 SQLite Database
-
 The main data-cleaning pipeline in `src/clean.py` creates and populates the local SQLite database at:
 
 `data/instamart.db`
@@ -289,7 +290,7 @@ The database creation and population are handled by the cleaning pipeline, and t
 
 Seven SQL queries are implemented in `sql/queries.sql` and executed by `src/run_sql.py`.
 
-| Query | Business question / SQL concept |
+| Query | Business Question / SQL Concept |
 |---|---|
 | Q1 | Customers with completed-order spending above the specified threshold |
 | Q2 | Revenue grouped by city and product category |
@@ -331,7 +332,7 @@ PCA with two components is also applied to the standardized RFM feature matrix f
 
 The generated `outputs/customer_segments.csv` contains 1,175 customers with completed-order history.
 
-| Customer segment | Customers | Average recency (days) | Average frequency | Average monetary value (INR) |
+| Customer Segment | Customers | Average Recency (Days) | Average Frequency | Average Monetary Value (INR) |
 |---|---:|---:|---:|---:|
 | Daily Grocery Loyalists | 419 | 8.77 | 19.40 | 3,410.02 |
 | High-Value Premium Shoppers | 138 | 24.12 | 6.77 | 7,129.70 |
@@ -365,6 +366,7 @@ The supervised lapse-prediction workflow:
 11. Creates a top-10 retention list from premium customers in the test set.
 
 The lapse-model script uses a cohort of 1,156 customers, with 924 training rows and 232 test rows in the recorded execution.
+
 ### 6.5 Churn Prediction Model Evaluation
 
 The churn prediction model was evaluated using a train-test split.
@@ -377,14 +379,13 @@ The churn prediction model was evaluated using a train-test split.
 | F1-score | 65.54% |
 
 **Dataset split:**
+
 - Training samples: 924
 - Testing samples: 232
 
 The evaluation indicates that the model identifies customer churn patterns with a test accuracy of 73.71%. Precision, recall and F1-score provide additional insight into its ability to identify customers at risk of churn.
 
 These results are based on the supplied project dataset and should not be interpreted as production performance.
-
-
 
 ### 6.6 Model Outputs
 
@@ -444,11 +445,11 @@ Ticket routing uses the predicted category and customer segment to determine a q
 
 Fraud tickets are routed to the security team with high priority. Premium customers can be routed to the premium desk. Invalid, empty or long inputs are handled through review/guardrail statuses.
 
-### 7.4 Recorded Production Triage Results
+### 7.4 Recorded Triage Results
 
 The archived `outputs/triage_results.csv` contains 164 ticket rows.
 
-| Triage status | Tickets |
+| Triage Status | Tickets |
 |---|---:|
 | `classified_json` | 135 |
 | `classified_keyword` | 12 |
@@ -457,7 +458,7 @@ The archived `outputs/triage_results.csv` contains 164 ticket rows.
 | `skipped_empty` | 4 |
 | **Total** | **164** |
 
-Recorded routing breakdown:
+**Recorded routing breakdown:**
 
 | Route | Tickets |
 |---|---:|
@@ -519,7 +520,7 @@ The supplied `data/raw/policy_eval.csv` contains **14 evaluation questions**:
 
 **Recorded evaluation results:**
 
-| Evaluation metric | Standard chunking | Zero-overlap chunking |
+| Evaluation Metric | Standard Chunking | Zero-Overlap Chunking |
 |---|---:|---:|
 | Expected document match | 0/12 | 0/12 |
 | Expected fact match | 12/12 | 10/12 |
@@ -551,7 +552,7 @@ The refund action is simulated and logged locally. It does not transfer money or
 
 The Part D validator checks seven scenario IDs and their expected outcomes.
 
-| Scenario | Expected status |
+| Scenario | Expected Status |
 |---|---|
 | S1 | `REFUND` |
 | S2 | `REFUND` |
@@ -611,33 +612,41 @@ When a limit is reached, the agent returns a fallback outcome rather than contin
 - Visual Studio Code (recommended).
 - Git (for GitHub submission).
 
-### Step 1 — Open the project folder
+### Step 1 — Open the Project Folder
 
-Open the project root folder in VS Code. The terminal commands below must be run from the directory containing `run_project.py`, `requirements.txt` and `part_a_clean.py`.
+Open the project root folder in VS Code.
 
-### Step 2 — Create a virtual environment
+All terminal commands below must be run from the directory containing `run_project.py` and `requirements.txt`.
+
+### Step 2 — Create a Virtual Environment
 
 ```powershell
 python -m venv .venv
 ```
 
-### Step 3 — Activate the environment in PowerShell
+### Step 3 — Activate the Environment in PowerShell
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
 The terminal prompt should show `(.venv)` after successful activation.
 
-### Step 4 — Install dependencies
+### Step 4 — Install Dependencies
 
 ```powershell
 python -m pip install --upgrade pip
+```
+
+```powershell
 python -m pip install -r requirements.txt
 ```
 
-### Step 5 — Confirm the scikit-learn version
+### Step 5 — Confirm the scikit-learn Version
 
 ```powershell
 python -c "import sklearn; print(sklearn.__version__)"
@@ -655,42 +664,68 @@ Use the same dependency environment when loading the saved `outputs/lapse_model.
 
 ## 10. How to Run the Project
 
-## 10. How to Run the Project
-
 The project provides a main execution script named `run_project.py`.
 
 It executes the complete Part A–D workflow in the correct order, including the four part-specific validation scripts.
 
 Run all commands from the project root directory.
 
-### Step 1 – Execute the complete project
+### Step 1 — Execute the Complete Project
 
 ```powershell
 python run_project.py
+```
+
+### Step 2 — Review Generated Outputs
+
+After execution, review the generated files under:
+
+- `data/clean/`
+- `outputs/`
+- `state/`
+
+### Step 3 — Review Validation Results
+
+The main execution workflow includes the four part-specific validation scripts. Review their execution results to confirm that the project components complete successfully.
+
 ---
 
-## 11. Automated Testing
+## 11. Final Verification and Automated Tests
 
 The project includes automated tests using pytest to validate important functionalities across data processing, ticket triage, policy retrieval and refund-agent operations.
 
-### Recorded test results
+### Recorded Test Results
 
-| Test result | Count |
+| Test Result | Count |
 |---|---:|
 | Total tests | 14 |
 | Passed | 14 |
 | Failed | 0 |
 
-**Execution time:** 35.49 seconds
+**Recorded execution time:** 35.49 seconds.
 
-### Run automated tests
+### Run Automated Tests
 
 ```powershell
 python -m pytest -v
+```
+
+### Additional Verification
+
+The project also includes four part-specific validation scripts:
+
+- `src/validate_part_a.py`
+- `src/validate_part_b.py`
+- `src/validate_part_c.py`
+- `src/validate_part_d.py`
+
+These validators check the outputs and expected behaviour of the corresponding project components.
 
 ---
 
 ## 12. Generated Outputs
+
+The project generates the following outputs during execution.
 
 | Output | Description |
 |---|---|
@@ -725,7 +760,6 @@ Human review is important for ambiguous ticket classifications, sensitive cases 
 
 ---
 
-
 ## Project Summary
 
 This capstone demonstrates an end-to-end customer intelligence and support workflow:
@@ -735,3 +769,8 @@ This capstone demonstrates an end-to-end customer intelligence and support workf
 The project combines data engineering, SQL, unsupervised learning, supervised machine learning, text processing, retrieval-based question answering and tool-using agent concepts in one reproducible local implementation.
 
 ---
+
+**Project:** Instamart Customer Intelligence & Support Copilot  
+**Project Type:** AI/ML Capstone Project  
+**Primary Language:** Python  
+**Execution:** Local and offline prototype  
