@@ -19,7 +19,7 @@ The project is organized as a reproducible local prototype. It uses supplied/syn
 | Part B | RFM analysis, K-Means customer segmentation, PCA and lapse prediction |
 | Part C | Support-ticket triage, PII redaction, classification, priority routing and token-budget demonstration |
 | Part D | Policy document chunking, TF-IDF retrieval, mock-LLM policy Q&A and simulated ReAct refund agent |
-| Validation | Four part-specific validators, automated pytest checks and Python compilation |
+| Validation | Four part-specific validators and automated pytest checks |
 
 ## Table of Contents
 
@@ -397,7 +397,7 @@ These results are based on the supplied project dataset and should not be interp
 | `outputs/churn_predictions.csv` | Prediction output from the separate churn-prediction artifact |
 | `outputs/churn_metrics.json` | Metrics associated with that churn-prediction artifact |
 
-The RFM/lapse workflow and the separate `prediction churn/` artifact are both retained in the project; their outputs should not be treated as the same evaluation run.
+The RFM/lapse workflow and the separate churn-prediction artifact are distinct outputs. The churn prediction CSV and metrics JSON should not be treated as the same evaluation run as the RFM/lapse model.
 
 ---
 
@@ -701,8 +701,7 @@ The project includes automated tests using pytest to validate important function
 | Total tests | 14 |
 | Passed | 14 |
 | Failed | 0 |
-
-**Recorded execution time:** 35.49 seconds.
+**Recorded execution time:** Approximately 40 seconds.
 
 ### Run Automated Tests
 
